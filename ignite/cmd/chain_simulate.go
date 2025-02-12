@@ -22,8 +22,8 @@ const (
 	flagSimappNumBlocks          = "numBlocks"
 	flagSimappBlockSize          = "blockSize"
 	flagSimappLean               = "lean"
-	flagSimappPeriod             = "period"
 	flagSimappGenesisTime        = "genesisTime"
+	flagSimName                  = "simName"
 )
 
 // NewChainSimulate creates a new simulation command to run the blockchain simulation.
@@ -31,7 +31,7 @@ func NewChainSimulate() *cobra.Command {
 	c := &cobra.Command{
 		Use:   "simulate",
 		Short: "Run simulation testing for the blockchain",
-		Long:  "Run simulation testing for the blockchain. It sends many randomized-input messages of each module to a simulated node and checks if invariants break",
+		Long:  "Run simulation testing for the blockchain. It sends many randomized-input messages of each module to a simulated node.",
 		Args:  cobra.NoArgs,
 		RunE:  chainSimulationHandler,
 	}
@@ -41,8 +41,8 @@ func NewChainSimulate() *cobra.Command {
 
 func chainSimulationHandler(cmd *cobra.Command, _ []string) error {
 	var (
-		period, _      = cmd.Flags().GetUint(flagSimappPeriod)
 		genesisTime, _ = cmd.Flags().GetInt64(flagSimappGenesisTime)
+		simName, _     = cmd.Flags().GetString(flagSimName)
 		config         = newConfigFromFlags(cmd)
 		appPath        = flagGetPath(cmd)
 	)
@@ -62,7 +62,7 @@ func chainSimulationHandler(cmd *cobra.Command, _ []string) error {
 	}
 
 	return c.Simulate(cmd.Context(),
-		chain.SimappWithPeriod(period),
+		chain.SimappWithSimulationTestName(simName),
 		chain.SimappWithGenesisTime(genesisTime),
 		chain.SimappWithConfig(config),
 	)
@@ -78,8 +78,8 @@ func newConfigFromFlags(cmd *cobra.Command) simulation.Config {
 		exportStatePath, _    = cmd.Flags().GetString(flagSimappExportStatePath)
 		exportStatsPath, _    = cmd.Flags().GetString(flagSimappExportStatsPath)
 		seed, _               = cmd.Flags().GetInt64(flagSimappSeed)
-		initialBlockHeight, _ = cmd.Flags().GetInt(flagSimappInitialBlockHeight)
-		numBlocks, _          = cmd.Flags().GetInt(flagSimappNumBlocks)
+		initialBlockHeight, _ = cmd.Flags().GetUint64(flagSimappInitialBlockHeight)
+		numBlocks, _          = cmd.Flags().GetUint64(flagSimappNumBlocks)
 		blockSize, _          = cmd.Flags().GetInt(flagSimappBlockSize)
 		lean, _               = cmd.Flags().GetBool(flagSimappLean)
 	)
@@ -108,12 +108,12 @@ func simappFlags(c *cobra.Command) {
 	c.Flags().String(flagSimappExportStatePath, "", "custom file path to save the exported app state JSON")
 	c.Flags().String(flagSimappExportStatsPath, "", "custom file path to save the exported simulation statistics JSON")
 	c.Flags().Int64(flagSimappSeed, 42, "simulation random seed")
-	c.Flags().Int(flagSimappInitialBlockHeight, 1, "initial block to start the simulation")
-	c.Flags().Int(flagSimappNumBlocks, 200, "number of new blocks to simulate from the initial block height")
+	c.Flags().Uint64(flagSimappInitialBlockHeight, 1, "initial block to start the simulation")
+	c.Flags().Uint64(flagSimappNumBlocks, 200, "number of new blocks to simulate from the initial block height")
 	c.Flags().Int(flagSimappBlockSize, 30, "operations per block")
 	c.Flags().Bool(flagSimappLean, false, "lean simulation log output")
 
 	// simulation flags
-	c.Flags().Uint(flagSimappPeriod, 0, "run slow invariants only once every period assertions")
+	c.Flags().String(flagSimName, "TestFullAppSimulation", "name of the simulation to run")
 	c.Flags().Int64(flagSimappGenesisTime, 0, "override genesis UNIX time instead of using a random UNIX time")
 }

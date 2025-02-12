@@ -20,7 +20,12 @@
 - [#4327](https://github.com/ignite/cli/pull/4327) Use the TxConfig from simState instead create a new one
 - [#4326](https://github.com/ignite/cli/pull/4326) Add `buf.build` version to `ignite version` command
 - [#4436](https://github.com/ignite/cli/pull/4436) Return tx hash to the faucet API
+- [#4437](https://github.com/ignite/cli/pull/4437) Remove module placeholders
 - [#4289](https://github.com/ignite/cli/pull/4289), [#4423](https://github.com/ignite/cli/pull/4423), [#4432](https://github.com/ignite/cli/pull/4432) Cosmos SDK v0.52 support
+- [#4480](https://github.com/ignite/cli/pull/4480) Add field max length
+- [#4477](https://github.com/ignite/cli/pull/4477) IBC v10 support
+- [#4166](https://github.com/ignite/cli/issues/4166) Migrate buf config files to v2
+- [#4494](https://github.com/ignite/cli/pull/4494) Automatic migrate the buf configs to v2
 
 ### Changes
 
@@ -44,6 +49,7 @@
 - [#4317](https://github.com/ignite/cli/pull/4317) Remove xchisel dependency
 - [#4361](https://github.com/ignite/cli/pull/4361) Remove unused `KeyPrefix` method
 - [#4384](https://github.com/ignite/cli/pull/4384) Compare genesis params into chain genesis tests
+- [#4463](https://github.com/ignite/cli/pull/4463) Run `chain simulation` with any simulation test case
 
 ### Fixes
 
@@ -51,6 +57,22 @@
 - [#4091](https://github.com/ignite/cli/pull/4091) Fix race conditions in the plugin logic
 - [#4128](https://github.com/ignite/cli/pull/4128) Check for duplicate proto fields in config
 - [#4402](https://github.com/ignite/cli/pull/4402) Fix gentx parser into the cosmosutil package
+- [#4474](https://github.com/ignite/cli/pull/4474) Fix issue in `build --release` command
+- [#4479](https://github.com/ignite/cli/pull/4479) Scaffold an `uint64 type crashs Ignite
+- [#4483](https://github.com/ignite/cli/pull/4483) Fix default flag parser for apps
+
+## [`v28.7.0`](https://github.com/ignite/cli/releases/tag/v28.7.0)
+
+### Features
+
+- [#4457](https://github.com/ignite/cli/pull/4457) Add `skip-build` flag to `chain serve` command to avoid (re)building the chain
+- [#4413](https://github.com/ignite/cli/pull/4413) Add `ignite s chain-registry` command
+
+## [`v28.6.1`](https://github.com/ignite/cli/releases/tag/v28.6.1)
+
+### Changes
+
+- [#4449](https://github.com/ignite/cli/pull/4449) Bump scaffolded chain to Cosmos SDK `v0.50.11`. Previous version have a high security vulnerability.
 
 ## [`v28.6.0`](https://github.com/ignite/cli/releases/tag/v28.6.0)
 
